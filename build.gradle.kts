@@ -1,4 +1,5 @@
 plugins {
+    id("fabric-loom") version "1.16-SNAPSHOT"
     kotlin("jvm") version "2.1.0"
     `maven-publish`
 }
@@ -8,6 +9,12 @@ version = "0.1.0"
 
 repositories {
     mavenCentral()
+    maven("https://maven.fabricmc.net/")
+}
+
+dependencies {
+    minecraft("com.mojang:minecraft:1.21.1")
+    mappings(loom.officialMojangMappings())
 }
 
 kotlin {
