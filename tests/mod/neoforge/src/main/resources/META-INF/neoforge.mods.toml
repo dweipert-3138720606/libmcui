@@ -1,0 +1,8 @@
+modLoader = "kotlinforforge"
+loaderVersion = "[5.11,)"
+license = "MIT"
+
+[[mods]]
+modId = "libmcui_test"
+version = "0.1.0"
+displayName = "LibMcUI Test Mod"

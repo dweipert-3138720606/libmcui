@@ -21,3 +21,24 @@ publishing {
         }
     }
 }
+
+tasks.register<Exec>("buildTestMod") {
+    group = "verification"
+    description = "Build the test mod"
+    workingDir = project.file("tests/mod")
+    commandLine("gradle", "build")
+}
+
+tasks.register<Exec>("runFabricTest") {
+    group = "verification"
+    description = "Launch Fabric test client"
+    workingDir = project.file("tests/mod")
+    commandLine("gradle", ":fabric:runClient")
+}
+
+tasks.register<Exec>("runNeoForgeTest") {
+    group = "verification"
+    description = "Launch NeoForge test client"
+    workingDir = project.file("tests/mod")
+    commandLine("gradle", ":neoforge:runClient")
+}
