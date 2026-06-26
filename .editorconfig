@@ -1,0 +1,44 @@
+root = true
+
+[*]
+indent_style = space
+indent_size = 4
+end_of_line = lf
+charset = utf-8
+trim_trailing_whitespace = true
+insert_final_newline = true
+max_line_length = 140
+
+[*.{kt,kts}]
+ktlint_code_style = intellij_idea
+
+ktlint_standard_no-wildcard-imports = enabled
+ij_kotlin_packages_to_use_import_on_demand = unset
+ij_kotlin_name_count_to_use_star_import = 99
+ij_kotlin_name_count_to_use_star_import_for_members = 99
+
+ktlint_standard_multiline-if-else = enabled
+
+# Disabled rules (deviations from ktlint_official)
+ktlint_standard_unnecessary-parentheses-before-trailing-lambda = disabled
+ktlint_standard_package-name = disabled
+ktlint_standard_parameter-list-wrapping = disabled
+ktlint_standard_multiline-expression-wrapping = disabled
+ktlint_standard_if-else-wrapping = disabled
+ktlint_standard_import-ordering = disabled
+
+# Uninitiated custom rules
+ktlint_uninitiated_explicit-lambda-param = enabled
+ktlint_uninitiated_parentheses-before-trailing-lambda = enabled
+ktlint_uninitiated_if-brace = enabled
+ktlint_uninitiated_if-multiline = enabled
+ktlint_uninitiated_blank-line-before-return = enabled
+ktlint_uninitiated_variable-name-length = enabled
+ktlint_uninitiated_min_variable_name_skip_names = _, it, x, y
+ktlint_uninitiated_no-to = enabled
+ktlint_uninitiated_no-primary-constructor = enabled
+
+[*.gradle.kts]
+# Gradle Kotlin DSL requires braces without parentheses for blocks
+ktlint_uninitiated_parentheses-before-trailing-lambda = disabled
+ktlint_uninitiated_explicit-lambda-param = disabled

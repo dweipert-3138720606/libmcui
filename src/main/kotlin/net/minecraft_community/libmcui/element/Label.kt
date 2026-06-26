@@ -3,11 +3,17 @@ package net.minecraft_community.libmcui.element
 import net.minecraft.client.Minecraft
 import net.minecraft.client.gui.GuiGraphics
 
-class Label(
-    var text: String = "",
-    var textColor: Int = 0xFFFFFFFF.toInt(),
+class Label() : Element() {
+    var text: String = ""
+    var textColor: Int = 0xFFFFFFFF.toInt()
     var shadow: Boolean = true
-) : Element() {
+
+    constructor(text: String = "", textColor: Int = 0xFFFFFFFF.toInt(), shadow: Boolean = true) : this() {
+        this.text = text
+        this.textColor = textColor
+        this.shadow = shadow
+    }
+
     init {
         stretchRatio = 0
     }
@@ -19,7 +25,10 @@ class Label(
     }
 
     override fun render(guiGraphics: GuiGraphics, mouseX: Int, mouseY: Int, partialTick: Float) {
-        if (!visible) return
+        if (!visible) {
+            return
+        }
+
         guiGraphics.drawString(Minecraft.getInstance().font, text, x, y, textColor, shadow)
     }
 }

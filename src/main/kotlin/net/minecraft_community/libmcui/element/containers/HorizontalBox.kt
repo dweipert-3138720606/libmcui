@@ -6,14 +6,12 @@ class HorizontalBox : Container() {
     override fun layout() {
         super.layout()
 
-        val contentWidth = width - marginLeft - marginRight - paddingLeft - paddingRight
-        val contentHeight = height - marginTop - marginBottom - paddingTop - paddingBottom
+        val expandChildren = children.filter({ child -> child.stretchRatio > 0 })
+        val expandTotal = expandChildren.sumOf({ child -> child.stretchRatio })
 
-        val expandChildren = children.filter { it.stretchRatio > 0 }
-        val expandTotal = expandChildren.sumOf { it.stretchRatio }
-
-        val shrinkWidth = children.filter { it.stretchRatio == 0 }
-            .sumOf { maxOf(it.minWidth, it.width).coerceAtLeast(0) + it.marginLeft + it.marginRight }
+        val shrinkWidth = children
+            .filter({ child -> child.stretchRatio == 0 })
+            .sumOf({ child -> maxOf(child.minWidth, child.width).coerceAtLeast(0) + child.marginLeft + child.marginRight })
 
         val availableForExpand = (contentWidth - shrinkWidth - (children.size - 1) * gap).coerceAtLeast(0)
 
@@ -33,5 +31,4 @@ class HorizontalBox : Container() {
             currentX += child.marginLeft + child.width + child.marginRight + gap
         }
     }
-
 }

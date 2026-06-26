@@ -21,11 +21,11 @@ abstract class Element {
 
     var margin: Int
         get() = ((marginLeft + marginRight + marginTop + marginBottom) / 4).toInt()
-        set(v) {
-            marginLeft = v
-            marginRight = v
-            marginTop = v
-            marginBottom = v
+        set(value) {
+            marginLeft = value
+            marginRight = value
+            marginTop = value
+            marginBottom = value
         }
 
     var visible: Boolean = true
@@ -43,4 +43,6 @@ abstract class Element {
     open fun mouseClicked(mouseX: Double, mouseY: Double, button: Int): Boolean = false
 
     open fun mouseScrolled(mouseX: Double, mouseY: Double, delta: Double): Boolean = false
+
+    fun containsPoint(pointX: Int, pointY: Int): Boolean = pointX in x..<(x + width) && pointY in y..<(y + height)
 }

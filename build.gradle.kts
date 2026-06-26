@@ -1,6 +1,7 @@
 plugins {
     id("fabric-loom") version "1.16-SNAPSHOT"
     kotlin("jvm") version "2.1.0"
+    id("org.jlleitschuh.gradle.ktlint") version "14.2.0"
     `maven-publish`
 }
 
@@ -9,16 +10,27 @@ version = "0.1.0"
 
 repositories {
     mavenCentral()
+    mavenLocal()
     maven("https://maven.fabricmc.net/")
+    maven("https://jitpack.io")
 }
 
 dependencies {
     minecraft("com.mojang:minecraft:1.21.1")
     mappings(loom.officialMojangMappings())
+
+    ktlintRuleset("de.dweipert:ktlint-rules-for-the-uninitiated:1.0.1")
 }
 
 kotlin {
     jvmToolchain(17)
+}
+
+ktlint {
+    version.set("1.8.0")
+    filter({
+        exclude({ element -> element.file.name.endsWith(".gradle.kts") })
+    })
 }
 
 publishing {

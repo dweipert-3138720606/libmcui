@@ -4,11 +4,14 @@ import net.minecraft.client.gui.GuiGraphics
 import net.minecraft.client.gui.screens.Screen as MinecraftScreen
 import net.minecraft.network.chat.Component
 
-open class Screen(title: Component = Component.literal("")) : MinecraftScreen(title) {
+open class Screen : MinecraftScreen {
     lateinit var root: Container
+
+    constructor(title: Component = Component.literal("")) : super(title)
 
     override fun init() {
         super.init()
+
         if (::root.isInitialized) {
             root.width = width
             root.height = height
