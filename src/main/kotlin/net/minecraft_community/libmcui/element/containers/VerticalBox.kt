@@ -6,19 +6,8 @@ class VerticalBox : Container() {
     override fun layout() {
         children.forEach({ child -> child.layout() })
 
-        if (width == 0 && children.isNotEmpty()) {
-            val maxChildWidth = children.maxOf({ child ->
-                child.width + child.marginLeft + child.marginRight
-            })
-            width = maxChildWidth + borderLeftWidth + borderRightWidth + paddingLeft + paddingRight
-        }
-
-        if (height == 0 && children.isNotEmpty()) {
-            val naturalContentHeight = children.sumOf({ child ->
-                maxOf(child.minHeight, child.height).coerceAtLeast(0) + child.marginTop + child.marginBottom
-            }) + (children.size - 1) * gap
-            height = naturalContentHeight + borderTopWidth + borderBottomWidth + paddingTop + paddingBottom
-        }
+        maybeDeriveWidthFromMaxOfChildren()
+        maybeDeriveHeightFromSumOfChildren()
 
         val expandChildren = children.filter({ child -> child.stretchRatio > 0 })
         val expandTotal = expandChildren.sumOf({ child -> child.stretchRatio })
@@ -35,6 +24,7 @@ class VerticalBox : Container() {
             } else {
                 child.height = (availableForExpand * child.stretchRatio / expandTotal).coerceAtLeast(child.minHeight)
             }
+
             child.width = contentWidth - child.marginLeft - child.marginRight
         }
 

@@ -6,19 +6,8 @@ class CenterContainer : Container() {
     override fun layout() {
         children.forEach({ child -> child.layout() })
 
-        if (width == 0 && children.isNotEmpty()) {
-            val maxChildWidth = children.maxOf({ child ->
-                child.width + child.marginLeft + child.marginRight
-            })
-            width = maxChildWidth + borderLeftWidth + borderRightWidth + paddingLeft + paddingRight
-        }
-
-        if (height == 0 && children.isNotEmpty()) {
-            val maxChildHeight = children.maxOf({ child ->
-                child.height + child.marginTop + child.marginBottom
-            })
-            height = maxChildHeight + borderTopWidth + borderBottomWidth + paddingTop + paddingBottom
-        }
+        maybeDeriveWidthFromMaxOfChildren()
+        maybeDeriveHeightFromMaxOfChildren()
 
         for (child in children) {
             child.x = contentLeft + (contentWidth - child.width) / 2

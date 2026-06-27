@@ -18,6 +18,62 @@ abstract class Container : Element() {
         }
     }
 
+    protected fun deriveWidthFromSumOfChildren(): Int {
+        val naturalContentWidth = children.sumOf({ child ->
+            maxOf(child.minWidth, child.width).coerceAtLeast(0) + child.marginLeft + child.marginRight
+        }) + (children.size - 1) * gap
+
+        return naturalContentWidth + borderLeftWidth + borderRightWidth + paddingLeft + paddingRight
+    }
+
+    protected fun maybeDeriveWidthFromSumOfChildren() {
+        if (width == 0 && children.isNotEmpty()) {
+            width = deriveWidthFromSumOfChildren()
+        }
+    }
+
+    protected fun deriveHeightFromSumOfChildren(): Int {
+        val naturalContentHeight = children.sumOf({ child ->
+            maxOf(child.minHeight, child.height).coerceAtLeast(0) + child.marginTop + child.marginBottom
+        }) + (children.size - 1) * gap
+
+        return naturalContentHeight + borderTopWidth + borderBottomWidth + paddingTop + paddingBottom
+    }
+
+    protected fun maybeDeriveHeightFromSumOfChildren() {
+        if (height == 0 && children.isNotEmpty()) {
+            height = deriveHeightFromSumOfChildren()
+        }
+    }
+
+    protected fun deriveWidthFromMaxOfChildren(): Int {
+        val maxChildWidth = children.maxOf({ child ->
+            child.width + child.marginLeft + child.marginRight
+        })
+
+        return maxChildWidth + borderLeftWidth + borderRightWidth + paddingLeft + paddingRight
+    }
+
+    protected fun maybeDeriveWidthFromMaxOfChildren() {
+        if (width == 0 && children.isNotEmpty()) {
+            width = deriveWidthFromMaxOfChildren()
+        }
+    }
+
+    protected fun deriveHeightFromMaxOfChildren(): Int {
+        val maxChildHeight = children.maxOf({ child ->
+            child.height + child.marginTop + child.marginBottom
+        })
+
+        return maxChildHeight + borderTopWidth + borderBottomWidth + paddingTop + paddingBottom
+    }
+
+    protected fun maybeDeriveHeightFromMaxOfChildren() {
+        if (height == 0 && children.isNotEmpty()) {
+            height = deriveHeightFromMaxOfChildren()
+        }
+    }
+
     override fun layout() {
         for (child in children) {
             child.layout()

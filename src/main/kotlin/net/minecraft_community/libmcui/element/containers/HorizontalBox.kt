@@ -6,19 +6,8 @@ class HorizontalBox : Container() {
     override fun layout() {
         children.forEach({ child -> child.layout() })
 
-        if (width == 0 && children.isNotEmpty()) {
-            val naturalContentWidth = children.sumOf({ child ->
-                maxOf(child.minWidth, child.width).coerceAtLeast(0) + child.marginLeft + child.marginRight
-            }) + (children.size - 1) * gap
-            width = naturalContentWidth + borderLeftWidth + borderRightWidth + paddingLeft + paddingRight
-        }
-
-        if (height == 0 && children.isNotEmpty()) {
-            val maxChildHeight = children.maxOf({ child ->
-                child.height + child.marginTop + child.marginBottom
-            })
-            height = maxChildHeight + borderTopWidth + borderBottomWidth + paddingTop + paddingBottom
-        }
+        maybeDeriveWidthFromSumOfChildren()
+        maybeDeriveHeightFromMaxOfChildren()
 
         val expandChildren = children.filter({ child -> child.stretchRatio > 0 })
         val expandTotal = expandChildren.sumOf({ child -> child.stretchRatio })
