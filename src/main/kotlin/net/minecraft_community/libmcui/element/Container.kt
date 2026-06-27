@@ -12,7 +12,7 @@ abstract class Container : Element() {
         children.add(child)
     }
 
-    protected fun relayoutChildren() {
+    protected fun layoutChildren() {
         for (child in children) {
             child.layout()
         }

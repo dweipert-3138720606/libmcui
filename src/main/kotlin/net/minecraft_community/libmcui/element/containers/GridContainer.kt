@@ -40,6 +40,6 @@ class GridContainer() : Container() {
             child.y = contentTop + row * (cellHeight + gap) + child.marginTop
         })
 
-        relayoutChildren()
+        layoutChildren()
     }
 }

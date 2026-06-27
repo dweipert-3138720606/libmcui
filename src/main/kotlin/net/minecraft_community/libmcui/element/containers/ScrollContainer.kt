@@ -26,7 +26,7 @@ class ScrollContainer : Container() {
 
         scrollHeight = currentY - contentTop
 
-        relayoutChildren()
+        layoutChildren()
     }
 
     override fun render(guiGraphics: GuiGraphics, mouseX: Int, mouseY: Int, partialTick: Float): Boolean {

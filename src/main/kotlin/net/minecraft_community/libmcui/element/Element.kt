@@ -29,10 +29,10 @@ abstract class Element {
             marginBottom = value
         }
 
-    var borderLeftColor: Int = 0xFFFFFF
-    var borderRightColor: Int = 0xFFFFFF
-    var borderTopColor: Int = 0xFFFFFF
-    var borderBottomColor: Int = 0xFFFFFF
+    var borderLeftColor: Int = 0xFFFFFFFF.toInt()
+    var borderRightColor: Int = 0xFFFFFFFF.toInt()
+    var borderTopColor: Int = 0xFFFFFFFF.toInt()
+    var borderBottomColor: Int = 0xFFFFFFFF.toInt()
 
     var borderColor: Int
         get() = ((borderLeftColor + borderRightColor + borderTopColor + borderBottomColor) / 4).toInt()

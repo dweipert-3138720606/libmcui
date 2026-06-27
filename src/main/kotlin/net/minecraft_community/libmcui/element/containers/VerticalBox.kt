@@ -4,7 +4,21 @@ import net.minecraft_community.libmcui.element.Container
 
 class VerticalBox : Container() {
     override fun layout() {
-        super.layout()
+        children.forEach({ child -> child.layout() })
+
+        if (width == 0 && children.isNotEmpty()) {
+            val maxChildWidth = children.maxOf({ child ->
+                child.width + child.marginLeft + child.marginRight
+            })
+            width = maxChildWidth + borderLeftWidth + borderRightWidth + paddingLeft + paddingRight
+        }
+
+        if (height == 0 && children.isNotEmpty()) {
+            val naturalContentHeight = children.sumOf({ child ->
+                maxOf(child.minHeight, child.height).coerceAtLeast(0) + child.marginTop + child.marginBottom
+            }) + (children.size - 1) * gap
+            height = naturalContentHeight + borderTopWidth + borderBottomWidth + paddingTop + paddingBottom
+        }
 
         val expandChildren = children.filter({ child -> child.stretchRatio > 0 })
         val expandTotal = expandChildren.sumOf({ child -> child.stretchRatio })
@@ -31,6 +45,6 @@ class VerticalBox : Container() {
             currentY += child.marginTop + child.height + child.marginBottom + gap
         }
 
-        relayoutChildren()
+        layoutChildren()
     }
 }
