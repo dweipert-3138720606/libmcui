@@ -4,11 +4,10 @@ import com.mojang.brigadier.Command
 import net.minecraft.client.Minecraft
 import net.minecraft.commands.Commands
 import net.neoforged.bus.api.SubscribeEvent
-import net.neoforged.fml.common.EventBusSubscriber
 import net.neoforged.neoforge.client.event.ClientTickEvent
 import net.neoforged.neoforge.client.event.RegisterClientCommandsEvent
+import net.minecraft_community.libmcui.test.TestScreen
 
-@EventBusSubscriber(modid = "libmcui_test", bus = EventBusSubscriber.Bus.GAME)
 object NeoForgeClientEvents {
     private var shouldOpenScreen = false
 
@@ -25,8 +24,8 @@ object NeoForgeClientEvents {
 
     @SubscribeEvent
     @JvmStatic
-    fun onClientTick(event: ClientTickEvent) {
-        if (event.phase == ClientTickEvent.Phase.END && shouldOpenScreen) {
+    fun onClientTick(event: ClientTickEvent.Post) {
+        if (shouldOpenScreen) {
             shouldOpenScreen = false
             Minecraft.getInstance().setScreen(TestScreen())
         }

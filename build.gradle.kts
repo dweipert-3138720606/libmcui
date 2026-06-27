@@ -22,6 +22,12 @@ dependencies {
     ktlintRuleset("de.dweipert:ktlint-rules-for-the-uninitiated:1.0.1")
 }
 
+tasks.processResources {
+    filesMatching("META-INF/neoforge.mods.toml") {
+        expand(project.properties)
+    }
+}
+
 kotlin {
     jvmToolchain(17)
 }
@@ -34,8 +40,9 @@ ktlint {
 }
 
 val unremappedJar by tasks.registering(Jar::class) {
-    dependsOn(tasks.compileKotlin, tasks.compileJava)
+    dependsOn(tasks.compileKotlin, tasks.compileJava, tasks.processResources)
     from(tasks.compileKotlin.map { it.outputs })
+    from(tasks.processResources.map { it.outputs })
     archiveClassifier.set("")
     destinationDirectory.set(layout.buildDirectory.dir("unremapped"))
 }

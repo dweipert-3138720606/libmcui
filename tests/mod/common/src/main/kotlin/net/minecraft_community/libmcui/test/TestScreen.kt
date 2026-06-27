@@ -1,4 +1,4 @@
-package net.minecraft_community.libmcui.test.fabric
+package net.minecraft_community.libmcui.test
 
 import net.minecraft.network.chat.Component
 import net.minecraft_community.libmcui.element.Button
@@ -13,7 +13,7 @@ class TestScreen(title: Component = Component.literal("LibMcUI Test")) : Screen(
             padding = 5
             backgroundColor = 0xFF1a1a2e.toInt()
             borderColor = 0xFFFFFFFF.toInt()
-            borderWidth = 1
+            borderWidth = 2
             addChild(
                 Label().apply({
                     text = "LibMcUI Test - all elements"
