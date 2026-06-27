@@ -27,12 +27,10 @@ class Button : InteractiveElement() {
         }
     }
 
-    override fun render(guiGraphics: GuiGraphics, mouseX: Int, mouseY: Int, partialTick: Float) {
-        if (!visible) {
-            return
+    override fun render(guiGraphics: GuiGraphics, mouseX: Int, mouseY: Int, partialTick: Float): Boolean {
+        if (!super.render(guiGraphics, mouseX, mouseY, partialTick)) {
+            return false
         }
-
-        super.render(guiGraphics, mouseX, mouseY, partialTick)
 
         val drawColor = if (hovered && hoverColor != null) {
             hoverColor!!
@@ -54,5 +52,7 @@ class Button : InteractiveElement() {
             val textY = y + (height - font.lineHeight) / 2
             guiGraphics.drawString(font, text, textX, textY, textColor, shadow)
         }
+
+        return true
     }
 }

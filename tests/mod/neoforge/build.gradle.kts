@@ -9,12 +9,14 @@ kotlin {
 
 repositories {
     mavenCentral()
+    mavenLocal()
     maven("https://thedarkcolour.github.io/KotlinForForge/")
 }
 
 dependencies {
     implementation("net.neoforged:neoforge:21.1.182")
     implementation(project(":common"))
+    implementation("net.minecraft_community:libmcui:0.1.0")
     implementation("thedarkcolour:kotlinforforge-neoforge:5.11.0")
 }
 

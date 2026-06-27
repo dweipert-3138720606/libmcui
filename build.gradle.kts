@@ -33,10 +33,17 @@ ktlint {
     })
 }
 
+val unremappedJar by tasks.registering(Jar::class) {
+    dependsOn(tasks.compileKotlin, tasks.compileJava)
+    from(tasks.compileKotlin.map { it.outputs })
+    archiveClassifier.set("")
+    destinationDirectory.set(layout.buildDirectory.dir("unremapped"))
+}
+
 publishing {
     publications {
         create<MavenPublication>("library") {
-            from(components["kotlin"])
+            artifact(unremappedJar)
         }
     }
 }

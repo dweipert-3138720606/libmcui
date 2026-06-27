@@ -6,6 +6,9 @@
   "entrypoints": {
     "main": [
       "net.minecraft_community.libmcui.test.fabric.FabricEntrypoint"
+    ],
+    "client": [
+      "net.minecraft_community.libmcui.test.fabric.FabricClientEntrypoint"
     ]
   },
   "depends": {

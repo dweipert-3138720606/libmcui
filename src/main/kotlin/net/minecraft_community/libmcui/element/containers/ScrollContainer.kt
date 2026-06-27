@@ -11,9 +11,9 @@ class ScrollContainer : Container() {
     override fun layout() {
         super.layout()
 
-        var currentY = y + marginTop + paddingTop
+        var currentY = contentTop
         for (child in children) {
-            child.x = x + marginLeft + paddingLeft + child.marginLeft
+            child.x = contentLeft + child.marginLeft
             child.y = currentY + child.marginTop
             child.width = (contentWidth - child.marginLeft - child.marginRight).coerceAtLeast(0)
 
@@ -24,13 +24,17 @@ class ScrollContainer : Container() {
             currentY = child.y + child.height + child.marginBottom + gap
         }
 
-        scrollHeight = currentY - (y + marginTop + paddingTop)
+        scrollHeight = currentY - contentTop
+
+        relayoutChildren()
     }
 
-    override fun render(guiGraphics: GuiGraphics, mouseX: Int, mouseY: Int, partialTick: Float) {
+    override fun render(guiGraphics: GuiGraphics, mouseX: Int, mouseY: Int, partialTick: Float): Boolean {
         if (!visible) {
-            return
+            return false
         }
+
+        renderBorder(guiGraphics)
 
         guiGraphics.enableScissor(x, y, x + width, y + height)
 
@@ -46,6 +50,8 @@ class ScrollContainer : Container() {
 
         guiGraphics.pose().popPose()
         guiGraphics.disableScissor()
+
+        return true
     }
 
     override fun mouseClicked(mouseX: Double, mouseY: Double, button: Int): Boolean {

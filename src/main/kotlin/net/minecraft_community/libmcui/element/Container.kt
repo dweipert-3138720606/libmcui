@@ -5,30 +5,17 @@ import net.minecraft.client.gui.GuiGraphics
 abstract class Container : Element() {
     val children: MutableList<Element> = mutableListOf()
 
-    var paddingLeft: Int = 0
-    var paddingRight: Int = 0
-    var paddingTop: Int = 0
-    var paddingBottom: Int = 0
-    var padding: Int
-        get() = ((paddingLeft + paddingRight + paddingTop + paddingBottom) / 4).toInt()
-        set(value) {
-            paddingLeft = value
-            paddingRight = value
-            paddingTop = value
-            paddingBottom = value
-        }
-
     var gap: Int = 0
-
-    val contentWidth: Int
-        get() = width - marginLeft - marginRight - paddingLeft - paddingRight
-
-    val contentHeight: Int
-        get() = height - marginTop - marginBottom - paddingTop - paddingBottom
 
     fun addChild(child: Element) {
         child.parent = this
         children.add(child)
+    }
+
+    protected fun relayoutChildren() {
+        for (child in children) {
+            child.layout()
+        }
     }
 
     override fun layout() {
@@ -37,9 +24,9 @@ abstract class Container : Element() {
         }
     }
 
-    override fun render(guiGraphics: GuiGraphics, mouseX: Int, mouseY: Int, partialTick: Float) {
-        if (!visible) {
-            return
+    override fun render(guiGraphics: GuiGraphics, mouseX: Int, mouseY: Int, partialTick: Float): Boolean {
+        if (!super.render(guiGraphics, mouseX, mouseY, partialTick)) {
+            return false
         }
 
         for (child in children) {
@@ -47,6 +34,8 @@ abstract class Container : Element() {
                 child.render(guiGraphics, mouseX, mouseY, partialTick)
             }
         }
+
+        return true
     }
 
     override fun mouseClicked(mouseX: Double, mouseY: Double, button: Int): Boolean {

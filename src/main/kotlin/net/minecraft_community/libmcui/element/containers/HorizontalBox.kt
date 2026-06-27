@@ -24,11 +24,13 @@ class HorizontalBox : Container() {
             child.height = contentHeight - child.marginTop - child.marginBottom
         }
 
-        var currentX = x + marginLeft + paddingLeft
+        var currentX = contentLeft
         for (child in children) {
             child.x = currentX + child.marginLeft
-            child.y = y + marginTop + paddingTop + child.marginTop
+            child.y = contentTop + child.marginTop
             currentX += child.marginLeft + child.width + child.marginRight + gap
         }
+
+        relayoutChildren()
     }
 }

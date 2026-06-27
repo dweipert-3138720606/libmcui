@@ -22,11 +22,6 @@ class GridContainer() : Container() {
         }
 
         children.forEachIndexed({ index, child ->
-            val col = index % columns
-            val row = index / columns
-            child.x = x + marginLeft + paddingLeft + col * (cellWidth + gap) + child.marginLeft
-            child.y = y + marginTop + paddingTop + row * (cellHeight + gap) + child.marginTop
-
             if (child.stretchRatio == 0) {
                 child.width = maxOf(child.minWidth, child.width)
                     .coerceAtMost((cellWidth - child.marginLeft - child.marginRight).coerceAtLeast(0))
@@ -37,5 +32,14 @@ class GridContainer() : Container() {
                 child.height = (cellHeight - child.marginTop - child.marginBottom).coerceAtLeast(child.minHeight)
             }
         })
+
+        children.forEachIndexed({ index, child ->
+            val col = index % columns
+            val row = index / columns
+            child.x = contentLeft + col * (cellWidth + gap) + child.marginLeft
+            child.y = contentTop + row * (cellHeight + gap) + child.marginTop
+        })
+
+        relayoutChildren()
     }
 }

@@ -24,11 +24,13 @@ class Label() : Element() {
         height = font.lineHeight
     }
 
-    override fun render(guiGraphics: GuiGraphics, mouseX: Int, mouseY: Int, partialTick: Float) {
-        if (!visible) {
-            return
+    override fun render(guiGraphics: GuiGraphics, mouseX: Int, mouseY: Int, partialTick: Float): Boolean {
+        if (!super.render(guiGraphics, mouseX, mouseY, partialTick)) {
+            return false
         }
 
         guiGraphics.drawString(Minecraft.getInstance().font, text, x, y, textColor, shadow)
+
+        return true
     }
 }

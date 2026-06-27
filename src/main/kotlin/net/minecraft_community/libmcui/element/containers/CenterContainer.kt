@@ -7,8 +7,10 @@ class CenterContainer : Container() {
         super.layout()
 
         for (child in children) {
-            child.x = x + marginLeft + paddingLeft + (contentWidth - child.width) / 2
-            child.y = y + marginTop + paddingTop + (contentHeight - child.height) / 2
+            child.x = contentLeft + (contentWidth - child.width) / 2
+            child.y = contentTop + (contentHeight - child.height) / 2
         }
+
+        relayoutChildren()
     }
 }

@@ -24,11 +24,13 @@ class VerticalBox : Container() {
             child.width = contentWidth - child.marginLeft - child.marginRight
         }
 
-        var currentY = y + marginTop + paddingTop
+        var currentY = contentTop
         for (child in children) {
-            child.x = x + marginLeft + paddingLeft + child.marginLeft
+            child.x = contentLeft + child.marginLeft
             child.y = currentY + child.marginTop
             currentY += child.marginTop + child.height + child.marginBottom + gap
         }
+
+        relayoutChildren()
     }
 }

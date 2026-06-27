@@ -8,10 +8,6 @@ pluginManagement {
 
 rootProject.name = "libmcui-testmod"
 
-includeBuild("../../") {
-    name = "libmcui"
-}
-
 include("common")
 include("fabric")
 include("neoforge")

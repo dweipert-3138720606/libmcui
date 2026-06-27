@@ -10,9 +10,9 @@ open class InteractiveElement : Element() {
     var onMouseEnter: (() -> Unit)? = null
     var onMouseLeave: (() -> Unit)? = null
 
-    override fun render(guiGraphics: GuiGraphics, mouseX: Int, mouseY: Int, partialTick: Float) {
-        if (!visible) {
-            return
+    override fun render(guiGraphics: GuiGraphics, mouseX: Int, mouseY: Int, partialTick: Float): Boolean {
+        if (!super.render(guiGraphics, mouseX, mouseY, partialTick)) {
+            return false
         }
 
         val wasHovered = hovered
@@ -25,6 +25,8 @@ open class InteractiveElement : Element() {
         if (!hovered && wasHovered) {
             onMouseLeave?.invoke()
         }
+
+        return true
     }
 
     override fun mouseClicked(mouseX: Double, mouseY: Double, button: Int): Boolean {

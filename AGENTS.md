@@ -13,3 +13,19 @@ Before committing any changes, run:
 ```bash
 gradle build
 ```
+
+after that verify the code style with:
+
+```bash
+gradle ktlintCheck
+```
+
+and fix any violations.
+
+Then run
+
+```bash
+gradle publishToMavenLocal
+```
+
+so the test mod can use the current version.

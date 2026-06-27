@@ -5,6 +5,7 @@ plugins {
 
 repositories {
     mavenCentral()
+    mavenLocal()
     maven("https://maven.fabricmc.net/")
 }
 
@@ -20,6 +21,7 @@ dependencies {
     modImplementation("net.fabricmc:fabric-language-kotlin:1.13.10+kotlin.2.3.20")
 
     implementation(project(":common"))
+    implementation("net.minecraft_community:libmcui:0.1.0")
 }
 
 
