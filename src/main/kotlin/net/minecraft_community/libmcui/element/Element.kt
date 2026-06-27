@@ -1,6 +1,7 @@
 package net.minecraft_community.libmcui.element
 
 import net.minecraft.client.gui.GuiGraphics
+import net.minecraft.resources.ResourceLocation
 
 abstract class Element {
     var x: Int = 0
@@ -56,6 +57,9 @@ abstract class Element {
             borderBottomWidth = value
         }
 
+    var backgroundColor: Int? = null
+    var backgroundTexture: ResourceLocation? = null
+
     var paddingLeft: Int = 0
     var paddingRight: Int = 0
     var paddingTop: Int = 0
@@ -89,21 +93,22 @@ abstract class Element {
 
     var mouseFilter: MouseFilter = MouseFilter.Stop
 
+    open fun layout() {}
+
+    open fun mouseClicked(mouseX: Double, mouseY: Double, button: Int): Boolean = false
+
+    open fun mouseScrolled(mouseX: Double, mouseY: Double, delta: Double): Boolean = false
+
     open fun render(guiGraphics: GuiGraphics, mouseX: Int, mouseY: Int, partialTick: Float): Boolean {
         if (!visible) {
             return false
         }
 
         renderBorder(guiGraphics)
+        drawBackground(guiGraphics)
 
         return true
     }
-
-    open fun layout() {}
-
-    open fun mouseClicked(mouseX: Double, mouseY: Double, button: Int): Boolean = false
-
-    open fun mouseScrolled(mouseX: Double, mouseY: Double, delta: Double): Boolean = false
 
     protected fun renderBorder(guiGraphics: GuiGraphics) {
         if (borderWidth <= 0) {
@@ -130,6 +135,21 @@ abstract class Element {
         if (borderBottomWidth > 0) {
             guiGraphics.fill(boxLeft, boxBottom - borderBottomWidth, boxRight, boxBottom, borderBottomColor)
         }
+    }
+
+    protected fun drawBackground(guiGraphics: GuiGraphics) {
+        val bgLeft = x + marginLeft + borderLeftWidth
+        val bgTop = y + marginTop + borderTopWidth
+        val bgRight = x + width - marginRight - borderRightWidth
+        val bgBottom = y + height - marginBottom - borderBottomWidth
+
+        backgroundColor?.let({ color ->
+            guiGraphics.fill(bgLeft, bgTop, bgRight, bgBottom, color)
+        })
+
+        backgroundTexture?.let({ texture ->
+            guiGraphics.blit(texture, bgLeft, bgTop, 0f, 0f, bgRight - bgLeft, bgBottom - bgTop, bgRight - bgLeft, bgBottom - bgTop)
+        })
     }
 
     fun containsPoint(pointX: Int, pointY: Int): Boolean = pointX in x..<(x + width) && pointY in y..<(y + height)

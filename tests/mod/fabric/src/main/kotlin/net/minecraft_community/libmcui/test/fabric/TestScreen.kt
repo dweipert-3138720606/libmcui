@@ -11,6 +11,7 @@ class TestScreen(title: Component = Component.literal("LibMcUI Test")) : Screen(
         root = VerticalBox().apply({
             margin = 20
             padding = 5
+            backgroundColor = 0xFF1a1a2e.toInt()
             borderColor = 0xFFFFFFFF.toInt()
             borderWidth = 1
             addChild(

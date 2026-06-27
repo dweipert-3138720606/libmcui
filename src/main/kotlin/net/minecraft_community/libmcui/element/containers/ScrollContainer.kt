@@ -35,6 +35,7 @@ class ScrollContainer : Container() {
         }
 
         renderBorder(guiGraphics)
+        drawBackground(guiGraphics)
 
         guiGraphics.enableScissor(x, y, x + width, y + height)
 
